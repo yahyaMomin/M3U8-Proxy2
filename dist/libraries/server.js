@@ -613,6 +613,12 @@ async function proxyTs(url, headers, req, res) {
             ...headers,
         },
     };
+
+    // Set CORS headers
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "*");
+    res.setHeader("Access-Control-Allow-Methods", "*");
+    
     // Proxy request and pipe to client
     try {
         if (forceHTTPS) {
