@@ -18,6 +18,7 @@ import { join } from "node:path";
 import colors from "colors";
 import axios from "axios";
 
+import { config } from "../config/config.js";
 function withCORS(headers, request) {
     headers["access-control-allow-origin"] = "*";
     const corsMaxAge = request.corsAnywhereRequestState.corsMaxAge;
@@ -431,9 +432,9 @@ function createServer(options) {
     return server;
 }
 
-const host = process.env.HOST || "0.0.0.0";
-const port = process.env.PORT || 8080;
-const web_server_url = process.env.PUBLIC_URL || `http://${host}:${port}`;
+const host = config.HOST;
+const port = config.PORT;
+const web_server_url = config.PUBLIC_URL || `http://${host}:${port}`;
 
 export default function server() {
     const originBlacklist = parseEnvList(process.env.CORSANYWHERE_BLACKLIST);
@@ -664,7 +665,7 @@ export async function proxyTs(url: string, headers: any, req, res: http.ServerRe
     };
 
     res.setHeader("Access-Control-Allow-Origin", "*");
-    
+
     // Proxy request and pipe to client
     try {
         if (forceHTTPS) {
